@@ -1,31 +1,39 @@
 const bedrock = require('bedrock-protocol');
 
-const options = {
-  host: 'surwme.aternos.me', // Текстова адреса (бот сам знайде правильний IP)
-  port: 19931,               // Твій порт з Атерноса
+// Повністю чисті та стабільні налаштування
+const botConfig = {
+  host: 'surwme.aternos.me', 
+  port: 19931,               
   username: 'AternosBot247', 
   offline: true,             
-  skipPing: true,            // ПРОПУСКАЄМО ПІНГ, щоб не було помилки Ping timed out!
-  version: '1.21.30'         
+  skipPing: true,            // Ігноруємо пінг, щоб не було затримок
+  connectTimeout: 20000      // Даємо боту більше часу (20 сек) на пробиття мережі
 };
 
-function createBot() {
-  console.log('Спроба підключення до Bedrock сервера...');
+function startBot() {
+  console.log('===> Запуск бота: Спроба пробити підключення до Атернос...');
   
-  const client = bedrock.createClient(options);
+  try {
+    const bot = bedrock.createClient(botConfig);
 
-  client.on('spawn', () => {
-    console.log('Бот успішно зайшов на Bedrock сервер і з’явився у грі!');
-  });
+    bot.on('spawn', () => {
+      console.log('🎉 ПЕРЕМОГА! Бот успішно зайшов на сервер і з’явився у грі!');
+    });
 
-  client.on('error', (err) => {
-    console.log(`Сталася помилка: ${err.message}`);
-  });
+    bot.on('error', (err) => {
+      console.log(`⚠️ Помилка з'єднання: ${err.message}`);
+    });
 
-  client.on('close', () => {
-    console.log('Бота відключено від сервера. Перезапуск через 10 секунд...');
-    setTimeout(createBot, 10000);
-  });
+    bot.on('close', () => {
+      console.log('🔌 Роботу бота зупинено. Авто-перезапуск через 5 секунд...');
+      setTimeout(startBot, 5000);
+    });
+
+  } catch (error) {
+    console.log(`❌ Критичний збій при створенні: ${error.message}`);
+    setTimeout(startBot, 5000);
+  }
 }
 
-createBot();
+// Запуск нашої системи
+startBot();
