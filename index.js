@@ -1,11 +1,11 @@
 const bedrock = require('bedrock-protocol');
 
 const options = {
-  host: 'surwme.aternos.me', // Твоя постійна адреса з Атерноса
-  port: 19931,               // Твій поточний порт
-  username: 'AternosBot247', // Нікнейм бота
-  offline: true,             // Працює як "Cracked" (для піратських серверів)
-  version: '1.21.30'         // Протокол підключення для версії 1.26
+  host: '185.107.192.163', // Твоє пряме цифрове IP для швидкого з'єднання
+  port: 19931,               // Твій порт
+  username: 'AternosBot247', 
+  offline: true,             
+  version: '1.21.30'         
 };
 
 function createBot() {
@@ -14,7 +14,7 @@ function createBot() {
   const client = bedrock.createClient(options);
 
   client.on('spawn', () => {
-    console.log('Бот успішно зайшел на Bedrock сервер і з’явився у грі!');
+    console.log('Бот успішно зайшов на Bedrock сервер і з’явився у грі!');
   });
 
   client.on('error', (err) => {
