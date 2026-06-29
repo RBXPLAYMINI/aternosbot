@@ -1,25 +1,29 @@
-const mineflayer = require('mineflayer')
+const bedrock = require('bedrock-protocol');
+
+const options = {
+  host: '185.107.194.198', // Перевір, чи це актуальна IP-адреса в Атерносі
+  port: 19931,             // Перевір, чи це твій поточний порт в Атерносі
+  username: 'AternosBot247',
+  offline: true            // Це заміняє "Cracked" режим для піратів
+};
 
 function createBot() {
-    const bot = mineflayer.createBot({
-        host: 'surwme.aternos.me', 
-        port: 19931,                 // Змінили порт на Bedrock!
-        username: 'bot24_7',        // Замінив '/' на '_' про всяк випадок
-        version: false              // Автовизначення версії Bedrock
-    })
+  console.log('Спроба підключення до Bedrock сервера...');
+  
+  const client = bedrock.createClient(options);
 
-    bot.on('spawn', () => {
-        console.log('Бот успішно зайшов на Bedrock сервер!')
-    })
+  client.on('spawn', () => {
+    console.log('Бот успішно зайшов на Bedrock сервер і з’явився у грі!');
+  });
 
-    bot.on('end', () => {
-        console.log('Бота відключено. Перезапуск через 10 секунд...')
-        setTimeout(createBot, 10000)
-    })
+  client.on('error', (err) => {
+    console.log(`Сталася помилка: ${err.message}`);
+  });
 
-    bot.on('error', (err) => {
-        console.log('Сталася помилка:', err)
-    })
+  client.on('close', () => {
+    console.log('Бота відключено від сервера. Перезапуск через 10 секунд...');
+    setTimeout(createBot, 10000);
+  });
 }
 
-createBot()
+createBot();
