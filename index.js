@@ -1,10 +1,11 @@
 const bedrock = require('bedrock-protocol');
 
 const options = {
-  host: '185.107.192.163', // Твоє пряме цифрове IP для швидкого з'єднання
-  port: 19931,               // Твій порт
+  host: 'surwme.aternos.me', // Текстова адреса (бот сам знайде правильний IP)
+  port: 19931,               // Твій порт з Атерноса
   username: 'AternosBot247', 
   offline: true,             
+  skipPing: true,            // ПРОПУСКАЄМО ПІНГ, щоб не було помилки Ping timed out!
   version: '1.21.30'         
 };
 
